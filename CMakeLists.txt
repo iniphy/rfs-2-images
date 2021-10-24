@@ -18,10 +18,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/)
 
 # set libraries
 # set(RECFUSION_PATH SETUP_THIS)
+set(CXXOPTS_PATH third-party/cxxopts)
+
+add_subdirectory(${CXXOPTS_PATH})
 
 include_directories(${RECFUSION_PATH}/include)
 link_directories(${RECFUSION_PATH}/lib)
 
 add_executable(rfs-2-images src/main.cpp src/main.cpp)
 
-#target_link_libraries(rfs-2-images RecFusion)
+target_link_libraries(rfs-2-images cxxopts) # RecFusion)

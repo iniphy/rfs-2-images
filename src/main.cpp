@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cxxopts.hpp>
+#include <stb_image_write.h>
 
 int main(int argc, char *argv[]) {
     cxxopts::Options options("rfs-2-images", "Converting RecFusion sequence to images");

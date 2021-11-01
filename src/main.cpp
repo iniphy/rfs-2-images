@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cxxopts.hpp>
+
 #define STB_IMAGE_WRITE_IMPLEMENTATION
+
 #include <stb_image_write.h>
 #include <RecFusion.h>
 
@@ -46,15 +48,21 @@ int main(int argc, char *argv[]) {
     RecFusion::DepthImage depth_image(rfs.depthWidth(), rfs.depthHeight());
     RecFusion::ColorImage color_image(rfs.colorWidth(), rfs.colorHeight());
     std::cout << "Number of frames: " << rfs.frameCount() << std::endl;
-    std::cout << "Depth image size (width: " << rfs.depthWidth() << "; height: " << rfs.depthHeight() << ")" << std::endl;
-    std::cout << "Color image size (width: " << rfs.colorWidth() << "; height: " << rfs.colorHeight() << ")" << std::endl;
+    std::cout << "Depth image size (width: " << rfs.depthWidth() << "; height: " << rfs.depthHeight() << ")"
+              << std::endl;
+    std::cout << "Color image size (width: " << rfs.colorWidth() << "; height: " << rfs.colorHeight() << ")"
+              << std::endl;
     for (int k = 0; k < rfs.frameCount(); ++k) {
         if (!rfs.readImage(k, depth_image, color_image)) {
             std::cerr << "Couldn't read frame number " << k << std::endl;
         }
         // Save the images !
-        stbi_write_png((std::string("depth/frame_") + std::to_string(k) + ".png").c_str(), rfs.depthWidth(), rfs.depthHeight(), 0, depth_image.data(), 1);
-        stbi_write_png((std::string("color/frame_") + std::to_string(k) + ".png").c_str(), rfs.colorWidth(), rfs.colorHeight(), 0, color_image.data(), 1);
+        stbi_write_png_16((std::string("depth/frame_") + std::to_string(k) + ".png").c_str(),
+                          rfs.depthWidth(), rfs.depthHeight(), 1,
+                          depth_image.data(), depth_image.width() * 2);
+        stbi_write_png((std::string("color/frame_") + std::to_string(k) + ".png").c_str(),
+                       rfs.colorWidth(), rfs.colorHeight(), 3,
+                       color_image.data(), color_image.width() * 3);
     }
     rfs.close();
 }

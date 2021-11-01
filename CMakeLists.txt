@@ -18,7 +18,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/)
 
 # set libraries
 set(CXXOPTS_PATH third-party/cxxopts)
-set(STB_PATH third-party/stb)
+set(STB_PATH third-party/stb-16bit)
 
 add_subdirectory(${CXXOPTS_PATH})
 
